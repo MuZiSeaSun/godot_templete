@@ -1,0 +1,64 @@
+name: Make Release
+on:
+  workflow_dispatch:
+    inputs:
+      release-name:
+        description: 'Release name'
+        required: true
+        type: string
+        default: 'Luban Build'
+      publish-release:
+        description: 'Publish to release'
+        required: true
+        type: boolean
+        default: false
+
+env:
+  GAME_NAME: GodotTemplete
+  ANDROID_PACKAGE: com.godot.templete
+  IOS_PACKAGE: com.godot.templete
+
+jobs:
+  build:
+    runs-on: ${{ matrix.platform.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [
+          # { name: "Windows Desktop x86_64", os: "ubuntu-latest" },
+          # { name: "Windows Desktop x86_32", os: "ubuntu-latest" },
+          # { name: "Windows Desktop arm64", os: "ubuntu-latest" },
+          { name: "Linux x86_64", os: "ubuntu-latest" },
+          # { name: "Linux x86_32", os: "ubuntu-latest" },
+          # { name: "Linux arm64", os: "ubuntu-latest" },
+          # { name: "Linux arm32", os: "ubuntu-latest" },
+          { name: "macOS", os: "macos-latest" },
+          # { name: "iOS", os: "macos-latest" },
+          { name: "Android", os: "ubuntu-latest" },
+          { name: "Web", os: "ubuntu-latest" },
+        ]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Game
+        uses: appsinacup/action_export_godot_game@master
+        with:
+          godot-version: 4.7.1-stable
+          game-name: ${{ env.GAME_NAME }}
+          android-package: ${{ env.ANDROID_PACKAGE }}
+          ios-package: ${{ env.IOS_PACKAGE }}
+          platform-name: ${{ matrix.platform }}
+          # secret-macos-build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          # secret-p12-password: ${{ secrets.P12_PASSWORD }}
+          # secret-keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+          # secret-ios-distribution-certificate-base64: ${{ secrets.DISTRIBUTION_CERTIFICATE_BASE64 }}
+          # secret-ios-deploy-provision-profile-ios-base64: ${{ secrets.DEPLOY_PROVISION_PROFILE_IOS_BASE64 }}
+          # secret-apple-id: ${{ secrets.APPLE_ID }}
+          # secret-apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
+          # secret-apple-password: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+          # secret-android-keystore-base64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          # secret-android-keystore-password: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          # secret-android-keystore-user: ${{ secrets.ANDROID_KEYSTORE_USER }}

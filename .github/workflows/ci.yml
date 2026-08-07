@@ -1,0 +1,38 @@
+# For syntax, see https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+# This workflow is automatically triggered for every push and pull request, to verify that everything still builds.
+
+name: Continuous Integration
+on:
+  workflow_call:
+  push:
+  pull_request:
+    paths-ignore:
+    - '**.yml'
+    - '**.md'
+  merge_group:
+
+jobs:
+  unit-test:
+    name: "CI Unit Test"
+    runs-on: 'ubuntu-22.04'
+    timeout-minutes: 10 # The overall timeout
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
+
+    steps:
+      # checkout your repository
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      # run tests by using the gdUnit4-action with Godot version 4.7.1 and the latest GdUnit4 release 
+      - uses: MikeSchulze/gdUnit4-action@v1.0.2
+        with:
+          godot-version: '4.7.1'
+          paths: |
+            res://test
+          timeout: 5
+          report-name: test_report.xml      
