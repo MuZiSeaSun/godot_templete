@@ -14,7 +14,7 @@ on:
         default: false
 
 env:
-  GODOT_VERSION: 4.3
+  GODOT_VERSION: 4.7.1
   EXPORT_NAME: godot-templete
   PROJECT_PATH: ./
 
