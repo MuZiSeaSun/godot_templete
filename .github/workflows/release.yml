@@ -44,7 +44,7 @@ jobs:
           fetch-depth: 0
 
       - name: Build Game
-        uses: appsinacup/action_export_godot_game@master
+        uses: appsinacup/action_export_godot_game@v1.0.1
         with:
           godot-version: 4.7.1-stable
           game-name: ${{ env.GAME_NAME }}
