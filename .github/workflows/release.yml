@@ -50,7 +50,7 @@ jobs:
           game-name: ${{ env.GAME_NAME }}
           android-package: ${{ env.ANDROID_PACKAGE }}
           ios-package: ${{ env.IOS_PACKAGE }}
-          platform-name: ${{ matrix.platform }}
+          platform-name: ${{ matrix.platform.name }}
           # secret-macos-build-certificate-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           # secret-p12-password: ${{ secrets.P12_PASSWORD }}
           # secret-keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
